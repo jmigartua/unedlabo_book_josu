@@ -9,6 +9,7 @@ chapters:
   sections:
   - file: chapter-13/analysis-A
   - file: chapter-13/20240510_representacion_datos
+  - file: chapter-13/20240510_representacion_datos_plotly
 #  - file: chapter-13/analysis-Q1-3
 #  - file: chapter-13/analysis-B
 #  - file: chapter-13/analysis-Q4-9
