@@ -1,0 +1,975 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>6 Modelling data. Least squares, chi squared, residuals, ANNOVA &#8212; Applying Maths in the Chemical &amp; Biomolecular Sciences</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter-13/analysis-B';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Questions 4 - 9" href="analysis-Q4-9.html" />
+    <link rel="prev" title="Questions 1 - 3" href="analysis-Q1-3.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/book-cover.jpg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/book-cover.jpg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Applying Maths in the Chemical and Biomolecular Sciences.
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="analysis-intro.html">13. Data Analysis</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="analysis-A.html">1 Characterizing experimental data. Accuracy, precision, mean and standard deviation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="20240510_representacion_datos.html">Datos Práctica Electricidad I,</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analysis-Q1-3.html">Questions 1 - 3</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">6 Modelling data. Least squares, chi squared, residuals, ANNOVA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analysis-Q4-9.html">Questions 4 - 9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analysis-C.html">7 Modelling data is simpler using matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analysis-Q10-11.html">Questions 10 - 13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analysis-D.html">10 Non-linear least squares. Least absolute deviation. Principal component analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analysis-answers1-11.html">Solutions Q1 -11</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/subblue/applying-maths-book/main?urlpath=lab/tree/applying_maths_book/chapter-13/analysis-B.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/subblue/applying-maths-book/blob/main/applying_maths_book/chapter-13/analysis-B.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/subblue/applying-maths-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/subblue/applying-maths-book/issues/new?title=Issue%20on%20page%20%2Fchapter-13/analysis-B.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapter-13/analysis-B.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>6 Modelling data. Least squares, chi squared, residuals, ANNOVA</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#concept">6.1 Concept</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-least-squares-calculation-for-a-straight-line">6.2 The least squares calculation for a straight line</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals">6.3 Residuals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chi-squared-chi-2">6.4 Chi squared, <span class="math notranslate nohighlight">\(\chi^2\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confidence-intervals">6.5 Confidence intervals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-analysis-of-variance-anova-table">6.6 The analysis of variance (ANOVA) table</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-coefficients">6.7 Correlation coefficients</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-function-should-i-use-for-a-linear-fit-y-bx-or-y-a-bx">6.8 What function should I use for a linear fit, <span class="math notranslate nohighlight">\(y=bx\)</span> or <span class="math notranslate nohighlight">\(y=a+bx\)</span> ?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#over-parameterising">Over-parameterising</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="modelling-data-least-squares-chi-squared-residuals-annova">
+<h1>6 Modelling data. Least squares, chi squared, residuals, ANNOVA<a class="headerlink" href="#modelling-data-least-squares-chi-squared-residuals-annova" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import all python add-ons etc that will be needed later on</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">quad</span><span class="p">,</span><span class="n">odeint</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">t</span><span class="p">,</span> <span class="n">norm</span><span class="p">,</span> <span class="n">chi2</span><span class="p">,</span> <span class="n">f</span>
+<span class="n">init_printing</span><span class="p">()</span>                      <span class="c1"># allows printing of SymPy results in typeset maths format</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">})</span>  <span class="c1"># set font size for plots</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># import all python add-ons etc that will be needed later on</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="s1">&#39;matplotlib&#39;</span><span class="p">,</span> <span class="s1">&#39;inline&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="nn">File ~/anaconda3/envs/jupyterbooks/lib/python3.11/site-packages/IPython/core/interactiveshell.py:2432,</span> in <span class="ni">InteractiveShell.run_line_magic</span><span class="nt">(self, magic_name, line, _stack_depth)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2430</span>     <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;local_ns&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_local_scope</span><span class="p">(</span><span class="n">stack_depth</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2431</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">builtin_trap</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">2432</span>     <span class="n">result</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2434</span> <span class="c1"># The code below prevents the output from being displayed</span>
+<span class="g g-Whitespace">   </span><span class="mi">2435</span> <span class="c1"># when using magics with decorator @output_can_be_silenced</span>
+<span class="g g-Whitespace">   </span><span class="mi">2436</span> <span class="c1"># when the last Python token in the expression is a &#39;;&#39;.</span>
+<span class="g g-Whitespace">   </span><span class="mi">2437</span> <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">magic</span><span class="o">.</span><span class="n">MAGIC_OUTPUT_CAN_BE_SILENCED</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+
+<span class="nn">File ~/anaconda3/envs/jupyterbooks/lib/python3.11/site-packages/IPython/core/magics/pylab.py:99,</span> in <span class="ni">PylabMagics.matplotlib</span><span class="nt">(self, line)</span>
+<span class="g g-Whitespace">     </span><span class="mi">97</span>     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Available matplotlib backends: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">backends_list</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">98</span> <span class="k">else</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">99</span>     <span class="n">gui</span><span class="p">,</span> <span class="n">backend</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="o">.</span><span class="n">enable_matplotlib</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gui</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">args</span><span class="o">.</span><span class="n">gui</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">100</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_show_matplotlib_backend</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gui</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+
+<span class="nn">File ~/anaconda3/envs/jupyterbooks/lib/python3.11/site-packages/IPython/core/interactiveshell.py:3606,</span> in <span class="ni">InteractiveShell.enable_matplotlib</span><span class="nt">(self, gui)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3585</span> <span class="k">def</span> <span class="nf">enable_matplotlib</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">3586</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Enable interactive matplotlib and inline figure support.</span>
+<span class="g g-Whitespace">   </span><span class="mi">3587</span><span class="sd"> </span>
+<span class="g g-Whitespace">   </span><span class="mi">3588</span><span class="sd">     This takes the following steps:</span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3604</span><span class="sd">         display figures inline.</span>
+<span class="g g-Whitespace">   </span><span class="mi">3605</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">-&gt; </span><span class="mi">3606</span>     <span class="kn">from</span> <span class="nn">matplotlib_inline.backend_inline</span> <span class="kn">import</span> <span class="n">configure_inline_support</span>
+<span class="g g-Whitespace">   </span><span class="mi">3608</span>     <span class="kn">from</span> <span class="nn">IPython.core</span> <span class="kn">import</span> <span class="n">pylabtools</span> <span class="k">as</span> <span class="n">pt</span>
+<span class="g g-Whitespace">   </span><span class="mi">3609</span>     <span class="n">gui</span><span class="p">,</span> <span class="n">backend</span> <span class="o">=</span> <span class="n">pt</span><span class="o">.</span><span class="n">find_gui_and_backend</span><span class="p">(</span><span class="n">gui</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pylab_gui_select</span><span class="p">)</span>
+
+<span class="n">File</span> <span class="o">~/</span><span class="n">anaconda3</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">jupyterbooks</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.11</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">matplotlib_inline</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">backend_inline</span><span class="p">,</span> <span class="n">config</span>  <span class="c1"># noqa</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;0.1.6&quot;</span>  <span class="c1"># noqa</span>
+
+<span class="n">File</span> <span class="o">~/</span><span class="n">anaconda3</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">jupyterbooks</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.11</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">matplotlib_inline</span><span class="o">/</span><span class="n">backend_inline</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">6</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;A matplotlib backend for publishing figures via display_data&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="c1"># Copyright (c) IPython Development Team.</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1"># Distributed under the terms of the BSD 3-Clause License.</span>
+<span class="ne">----&gt; </span><span class="mi">6</span> <span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">colors</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">from</span> <span class="nn">matplotlib.backends</span> <span class="kn">import</span> <span class="n">backend_agg</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;matplotlib&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="concept">
+<h2>6.1 Concept<a class="headerlink" href="#concept" title="Permalink to this heading">#</a></h2>
+<p>In many situations, the purpose of an investigation is to obtain an equation (regression model) that can be used to predict the value of one variable by knowledge of others. Probably the most useful and most applied method of doing this is the <em>least squares</em> method. The basic idea is shown in figure 7, where the square of the <span class="math notranslate nohighlight">\(y\)</span> displacement from the line to each data point, is minimized. The minimization is only along <span class="math notranslate nohighlight">\(y\)</span> because it is assumed that the <span class="math notranslate nohighlight">\(x\)</span> values are known exactly. By minimizing these displacements with an assumed model of the data, a straight line for example, the best fit to the data is obtained, and the calculation produces the slope and intercept of the best fitting line. Furthermore, the ‘goodness’ of fit can be made quantitative, allowing different theoretical models that might describe the data to be compared with one another. Different sets of data can also be compared. The least squares is a parametric method because a (parameterised) function is fitted to data, there are non-parametric methods, such as principal component analysis (section 13) that seek to understand the data without knowing the functional form.</p>
+<p>Suppose that in a chemical reaction the product yield is proportional to the pressure. Using the limited number of measurements available, it would be appropriate to calculate a least squares fit to the data to predict the yield that is most likely to occur at any given pressure. This information could then be used to control the reaction in some form of feedback loop. Similarly, if in a reaction the concentration of a compound vs time is measured, this can then be analysed using a least squares method to obtain the rate constant. Taking this further, if the rate constants vs temperature are measured, then an Arrhenius plot can be made and, by a second least squares analysis, the activation energy obtained.</p>
+<p>While the least squares method is extremely useful and universally used, there are some pitfalls to avoid. A straight line can be fitted to any set of data; it is only a matter of how well the line fits and whether this fit is acceptable. Several statistical tests can be used to check this. Fitting is not restricted to straight lines, and quadratic or higher polynomials can be used, as can exponentials or sine and cosines. The function used should always be based on the underlying science. Any set of data could fit equally well to several different functions and the more complicated the function, a polynomial or sum of several exponentials for example, the larger the number of variable parameters will be and the better the fit is going to be. Hence the quip, ‘with enough parameters you can fit the shape of an elephant’. However, the fit may describe the data but have no relationship at all to the underlying science, in which case nothing has been achieved because the parameters obtained have no meaning.</p>
+<p><img alt="Drawing" src="../_images/analysis-fig7.png" /></p>
+<p>Figure 7. The displacements are assumed to be Gaussian distributed. The line is <span class="math notranslate nohighlight">\(Y\)</span>, the experimental points, <span class="math notranslate nohighlight">\(y_i\)</span>. The square of all the displacements is minimized.</p>
+<hr class="docutils" />
+<p>Another pitfall is to make false correlation between observables. The reading age of children shows a very good linear relationship to their shoe size, but to suggest that a child with large shoes must be good at reading is clearly nonsense. The obvious correlation is that older children are generally better at reading than younger ones. A less obvious relationship is found in the rate of the rotational diffusion <span class="math notranslate nohighlight">\(D\)</span> of molecules in the same solvent. This can be measured by observing a molecule’s fluorescence through polarizers. A good linear correlation is found between D and the reciprocal of the molecular mass. This is, however, false. The true correlation is with molecular volume <span class="math notranslate nohighlight">\(V\)</span>, which for a limited class of molecules, such as aromatics or dye molecules, has a similar proportionality to mass. The Stokes - Einstein equation <span class="math notranslate nohighlight">\(D = k_BT/(6\eta V)\)</span>, where <span class="math notranslate nohighlight">\(\eta\)</span> is the viscosity, shows that molecular volume is the important quantity. The <span class="math notranslate nohighlight">\(D\)</span> vs reciprocal mass correlation can now easily be tested; an iodo-derivative has a far greater mass but not much greater volume than the protonated molecule. Remember that a strong observed correlation between the variables does not imply a causal relationship.</p>
+<p>The final thing to look out for when using least squares is outliers. These are data points well away from the trend indicated by other points. It may be argued that these can be ignored as being due to faulty experimentation, but if this is not the case these points have to be dealt with and in Section 3.6 such a test was described. The least squares method is inherently very sensitive to these points, because the square of the deviation is used. It is often quite clear that the line does not fit the data and is pulled away from what one would expect to see as the fit; see figure 15. In this case, a more robust method such as <em>least absolute deviation</em> is required, Section 6.8, without removing data points.</p>
+</section>
+<section id="the-least-squares-calculation-for-a-straight-line">
+<h2>6.2 The least squares calculation for a straight line<a class="headerlink" href="#the-least-squares-calculation-for-a-straight-line" title="Permalink to this heading">#</a></h2>
+<p>Suppose that the straight line</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle Y=a_0 +b_0x\]</div>
+<p>is proposed to describe the data. In a least squares analysis, the test is to determine whether the experimental data y follows the equation</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle y_i =a_0 +b_0x_i +\epsilon_i, \quad i=1,2,\cdots n\]</div>
+<p>where <span class="math notranslate nohighlight">\(\epsilon\)</span> is a random error with a mean of zero and standard deviation of <span class="math notranslate nohighlight">\(\sigma\)</span>. The least squares method produces the best constants <span class="math notranslate nohighlight">\(a_0\)</span> and <span class="math notranslate nohighlight">\(b_0\)</span> that describe the data, in the sense that the <span class="math notranslate nohighlight">\(Y\)</span> values calculated are the most probable values of the observations. This is based on the assumption that the data are Gaussian (normally) distributed as is expected to be the case from the central limit theorem.</p>
+<p>What the least squares method does is to minimize the square of the displacement between the values calculated from a ‘model’ function and the experimental data points <span class="math notranslate nohighlight">\(y\)</span>. Figure 7 shows the displacement for one point and a Gaussian distribution from which that point could have been produced. The statistic used to assess the goodness of fit is called ‘chi squared’ <span class="math notranslate nohighlight">\(\chi^2\)</span> and is defined as</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle \chi^2=\sum_{i=1}^nw_i(y_i-Y_i)^2\qquad\tag{25}\]</div>
+<p>where <span class="math notranslate nohighlight">\(y\)</span> is the experimental data, <span class="math notranslate nohighlight">\(Y\)</span> the model set of estimated data, and <span class="math notranslate nohighlight">\(w\)</span> the weighting. The ideal weighting is <span class="math notranslate nohighlight">\(w_i = 1/\sigma_i^2\)</span> . The <span class="math notranslate nohighlight">\(\chi^2\)</span> forms a distribution and the chance that a certain value can be obtained is calculated in a similar way as for the normal or <span class="math notranslate nohighlight">\(t\)</span> distributions, see Section 5.4.</p>
+<p>On the basis that the deviation of each experimental data point from its true mean value is normally distributed, the probability of observing the <span class="math notranslate nohighlight">\(y_i\)</span> data points is the product of individual normal distributions, which can be written as</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle p= \left(\frac{h}{\sqrt{\pi}}\right)^n\exp\left( -h^2\sum_{i=1}^nw_i(y_i-Y_i)^2\right)\]</div>
+<p>(<span class="math notranslate nohighlight">\(h=1/\sqrt{2\sigma^2}\)</span>) The most likely values are obtained when this probability is at its maximum, and this is found when <span class="math notranslate nohighlight">\(\sum_{i=1}^nw_i(y_i-Y_i)^2\)</span> has a minimum. This is the same as minimizing the <span class="math notranslate nohighlight">\(\chi^2\)</span> therefore this is used as a measure of the ‘goodness of fit’ of the model function to the data. The minimum <span class="math notranslate nohighlight">\(\chi^2\)</span> is found by differentiating this with respect to each of the parameters in the model function. This approach is quite general and is called a Maximum Likelihood method.</p>
+<p>To fit the straight-line model <span class="math notranslate nohighlight">\(Y = a_0 + b_0\)</span>x to experimental data <span class="math notranslate nohighlight">\(y_i\)</span>, the values a and b obtained will be the best estimates of <span class="math notranslate nohighlight">\(a_0\)</span> and <span class="math notranslate nohighlight">\(b_0\)</span> and therefore these are replaced with <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> in the equations. To find the minima, the derivatives <span class="math notranslate nohighlight">\(\partial \chi^2/\partial a\)</span> and <span class="math notranslate nohighlight">\(\partial \chi^2/\partial b\)</span> are calculated,</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle \frac{\partial }{\partial a} \sum_{i=1}^n (y_i-a-bx_i)^2w_i=-2\sum_{i=1}^n (y_i-a-bx_i)w_i=0\qquad\tag{26}\]</div>
+<div class="math notranslate nohighlight">
+\[\displaystyle \frac{\partial }{\partial b} \sum_{i=1}^n (y_i-a-bx_i)^2w_i=-2\sum_{i=1}^n (y_i-a-bx_i)w_ix_i=0\qquad\tag{27}\]</div>
+<p>which produce two equations and two unknowns; these simultaneous equations are known as the <em>normal equations</em> ;</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle a\sum_{i=1}^n w_i+b\sum_{i=1}^n x_iw_i=\sum_{i=1}^n y_iw_i, \qquad a\sum_{i=1}^n x_iw_i+b\sum_{i=1}^n x_i^2w_i=\sum_{i=1}^n y_ix_iw_i \qquad\tag{28}\]</div>
+<p>These simultaneous equations can be solved for <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> using the matrix method outlined in chapter 7. The determinant is</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\displaystyle \Delta =\begin{vmatrix}\sum w_i  &amp; \sum w_ix_i \\\sum w_ix_i &amp; \sum w_ix_i^2 \\ \end{vmatrix}\end{split}\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}a=\frac{1}{\Delta}\begin{vmatrix}\sum w_iy_i  &amp; \sum w_ix_i \\\sum w_ix_iy_i &amp; \sum w_ix_i^2 \\ \end{vmatrix}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}b=\frac{1}{\Delta}\begin{vmatrix}\sum w_i  &amp; \sum w_iy_i \\\sum w_ix_i &amp; \sum w_ix_iy_i \\ \end{vmatrix}\end{split}\]</div>
+<p>The best estimate of the slope <span class="math notranslate nohighlight">\(b\)</span> can be rewritten in a form more convenient for calculation as</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle b=\frac{S_{xy}}{S_{xx}}\qquad\tag{29}\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle S_{xy}=\sum_{i=1}^n x_iy_iw_i-\frac{\sum_{i=1}^n x_iw_i\sum_{i=1}^n y_iw_i}{\sum_{i=1}^n w_i}\qquad S_{xx}=\sum_{i=1}^n x_iw_i -\frac{\left(\sum_{i=1}^nx_iw_i\right)^2}{\sum_{i=1}^n w_i}\qquad\tag{30}\]</div>
+<div class="math notranslate nohighlight">
+\[\displaystyle S_w=\sum_{i=1}^n w_i\qquad\tag{31}\]</div>
+<p>The best estimate of the intercept a is</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle a=\langle y\rangle- b\langle x\rangle \qquad\tag{32}\]</div>
+<p>where the averages are</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle \langle x\rangle= \frac{\sum_{i=1}^n x_iw_i}{\sum_{i=1}^n w_i},\qquad \langle y\rangle =\frac{\sum_{i=1}^n y_iw_i}{\sum_{i=1}^n w_i}\]</div>
+<p>This means that the line goes through the ‘centre of gravity’ of the data.</p>
+<p>The intercept is also found by expanding the matrices above,</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle a= \frac{\sum_{i=1}^n w_ix_i^2\sum_{i=1}^n w_iy_i-\sum_{i=1}^nw_ix_i\sum_{i=1}^nw_ix_iy_i}{S_wS_{xx}} \qquad\tag{33}\]</div>
+<p>Most graphing packages and languages now have least squares fitting routines, but the calculation is also made easy by direct calculation and then weighting can be incorporated and confidence curves drawn. Because the differences between two large sums often occur in calculating terms such as <span class="math notranslate nohighlight">\(S_{xy}\)</span> and <span class="math notranslate nohighlight">\(S_{xx}\)</span>, the possibility of rounding errors can be significant. It is always advisable if possible to use a higher precision calculation than would normally be used.</p>
+<p>The following data is analysed,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\displaystyle \begin{array}{ccc}\\
+\hline
+x &amp; y &amp; \sigma\\
+\hline
+200&amp; 36.2&amp; 1.5\\ 
+220&amp; 42.7&amp; 1.1\\ 
+240&amp; 44.9&amp; 1.8\\ 
+260&amp; 51.8&amp; 0.3\\ 
+280&amp; 57.7&amp; 2.0\\ 
+300&amp; 60.9&amp; 0.9\\ 
+320&amp; 64.4&amp; 1.2\\ 
+340&amp; 68.2&amp; 1.6\\ 
+360&amp; 76.4&amp; 1.9\\ 
+380&amp; 80.1&amp; 0.9\\
+\hline \end{array}\end{split}\]</div>
+<p>The calculation uses the equations just derived and produces the regression equation <span class="math notranslate nohighlight">\(y = -9.27 + 0.234x\)</span> and with <span class="math notranslate nohighlight">\(95\)</span>% confidence limits, <span class="math notranslate nohighlight">\(a = -9.27 \pm 3.55\)</span> and <span class="math notranslate nohighlight">\(b = 0.234 \pm 0.0128\)</span> which is shown in figure 8. The residuals are shown in figure 9.</p>
+<p>Equations 31-33 are used to calculate the slope and intercept but the equations for the confidence limits are taken from Hines &amp; Montgomery (1990, chapter 14). These equations are in the algorithm as C_slope and C_intercept and are given as equations 37 and 37. They are only valid in the range of the data but are extended to show the large error on the intercept. The mean square error, (mse in the calculation), is the reduced <span class="math notranslate nohighlight">\(\chi^2\)</span> thus <span class="math notranslate nohighlight">\(\text{mse} =\chi^2/(n-2)\)</span> and the <span class="math notranslate nohighlight">\(\chi^2\)</span> is calculated with equation 25.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Algorithm: Weighted Least Squares</span>
+
+<span class="c1">#--------------------------------      </span>
+<span class="k">def</span> <span class="nf">lsq</span><span class="p">(</span><span class="n">xval</span><span class="p">,</span><span class="n">yval</span><span class="p">,</span><span class="n">w</span><span class="p">):</span>  <span class="c1"># y = a + bx</span>
+    <span class="n">Sw</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+    <span class="n">Sxw</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">xval</span><span class="o">*</span><span class="n">w</span><span class="p">)</span>
+    <span class="n">Syw</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">yval</span><span class="o">*</span><span class="n">w</span><span class="p">)</span>
+    <span class="n">Sxxw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">xval</span><span class="o">*</span><span class="n">xval</span><span class="o">*</span><span class="n">w</span><span class="p">)</span>
+    <span class="n">Syyw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">yval</span><span class="o">*</span><span class="n">yval</span><span class="o">*</span><span class="n">w</span><span class="p">)</span>
+    <span class="n">Sxyw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">xval</span><span class="o">*</span><span class="n">yval</span><span class="o">*</span><span class="n">w</span><span class="p">)</span>
+    <span class="n">xbar</span> <span class="o">=</span> <span class="n">Sxw</span><span class="o">/</span><span class="n">Sw</span>
+    <span class="n">ybar</span> <span class="o">=</span> <span class="n">Syw</span><span class="o">/</span><span class="n">Sw</span>
+    
+    <span class="n">Sxx</span>  <span class="o">=</span> <span class="n">Sxxw</span> <span class="o">-</span> <span class="n">Sxw</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">Sw</span>
+    <span class="n">Syy</span>  <span class="o">=</span> <span class="n">Syyw</span> <span class="o">-</span> <span class="n">Syw</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">Sw</span>
+    <span class="n">Sxy</span>  <span class="o">=</span> <span class="n">Sxyw</span> <span class="o">-</span> <span class="n">Sxw</span><span class="o">*</span><span class="n">Syw</span><span class="o">/</span><span class="n">Sw</span>
+    <span class="n">slope</span><span class="o">=</span> <span class="n">Sxy</span><span class="o">/</span><span class="n">Sxx</span>
+    <span class="n">intercept</span> <span class="o">=</span> <span class="n">ybar</span> <span class="o">-</span> <span class="n">slope</span><span class="o">*</span><span class="n">xbar</span>
+    
+    <span class="n">mse</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">Syy</span> <span class="o">-</span> <span class="n">slope</span><span class="o">*</span><span class="n">Sxy</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="p">)</span>  <span class="c1"># make positive as sqrt is taken next</span>
+    <span class="c1">#print(&#39;mse = &#39;,mse)</span>
+    <span class="n">cov</span>  <span class="o">=</span> <span class="o">-</span><span class="n">mse</span><span class="o">*</span><span class="n">xbar</span><span class="o">/</span><span class="p">(</span><span class="n">Sxx</span><span class="o">*</span><span class="n">Sw</span><span class="p">)</span>                  <span class="c1"># covariance</span>
+    
+    <span class="n">std_dev_slope</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mse</span><span class="o">/</span><span class="n">Sxx</span><span class="p">)</span>
+    <span class="n">std_dev_intercept</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mse</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">Sw</span> <span class="o">+</span> <span class="n">xbar</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">Sxx</span><span class="p">))</span>
+
+    <span class="n">prec</span>  <span class="o">=</span> <span class="mf">0.975</span>
+    <span class="n">quant</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">prec</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>                 <span class="c1"># prec quantile for T distribution</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">quant</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mse</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">Sw</span> <span class="o">+</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">xbar</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">Sxx</span><span class="p">))</span>  <span class="c1"># function of 95 % confidence limits</span>
+
+    <span class="k">return</span> <span class="n">slope</span><span class="p">,</span><span class="n">intercept</span><span class="p">,</span><span class="n">mse</span><span class="p">,</span><span class="n">cov</span><span class="p">,</span><span class="n">std_dev_slope</span><span class="p">,</span><span class="n">std_dev_intercept</span><span class="p">,</span><span class="n">Z</span>
+<span class="c1">#----------------------------------  end lsq </span>
+
+<span class="n">filename</span><span class="o">=</span><span class="s1">&#39;test data.txt&#39;</span>
+<span class="c1"># data is at end of book in &#39;Appendix, some basic Python instructions&#39;</span>
+<span class="n">xv</span> <span class="o">=</span> <span class="p">[]</span>                                   <span class="c1"># arrays to hold intial data while being read in</span>
+<span class="n">yv</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">wv</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">ff</span><span class="p">:</span>                <span class="c1"># length not known so read in all data and make list of each</span>
+    <span class="n">i</span><span class="o">=</span><span class="mi">0</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">ff</span><span class="p">:</span>
+        <span class="n">new_str</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="n">new_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="n">xv</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vals</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> 
+        <span class="n">yv</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vals</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> 
+        <span class="n">wv</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vals</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> 
+<span class="n">ff</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">xv</span><span class="p">)</span>                               <span class="c1"># we do not know length of data before hand </span>
+<span class="n">w</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>            <span class="c1"># data arrays</span>
+<span class="n">xval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">yval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">wv</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>              <span class="c1"># make lists into arrays</span>
+    <span class="n">xval</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">xv</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">yval</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">yv</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+<span class="n">slope</span><span class="p">,</span><span class="n">intercept</span><span class="p">,</span><span class="n">mse</span><span class="p">,</span><span class="n">cov</span><span class="p">,</span><span class="n">std_dev_slope</span><span class="p">,</span><span class="n">std_dev_intercept</span><span class="p">,</span><span class="n">Z</span> <span class="o">=</span> <span class="n">lsq</span><span class="p">(</span><span class="n">xval</span><span class="p">,</span><span class="n">yval</span><span class="p">,</span><span class="n">w</span><span class="p">)</span>  <span class="c1"># calculate return values</span>
+
+<span class="n">line</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="n">slope</span> <span class="o">+</span> <span class="n">intercept</span>      <span class="c1"># define striaght line fit</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:s}</span><span class="s1"> </span><span class="si">{:8.4g}</span><span class="s1"> </span><span class="si">{:s}</span><span class="s1"> </span><span class="si">{:8.4g}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;slope = &#39;</span><span class="p">,</span><span class="n">slope</span><span class="p">,</span><span class="s1">&#39; intercept = &#39;</span><span class="p">,</span> <span class="n">intercept</span><span class="p">)</span>  <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>slope =    0.2343  intercept =    -9.272
+</pre></div>
+</div>
+</div>
+</div>
+<p><img alt="Drawing" src="../_images/analysis-fig8.png" /></p>
+<p>Figure 8. Least squares fit to <span class="math notranslate nohighlight">\(y = a + bx\)</span> and <span class="math notranslate nohighlight">\(95\)</span>% confidence lines. These are projected to zero so that the large error on the intercept can be seen but the lines are only valid in the range of the data. The <span class="math notranslate nohighlight">\(95\)</span>% confidence limit lines are calculated using the function <span class="math notranslate nohighlight">\(\pm z\)</span>. Notice how the range becomes larger the further away from the data the lines are.</p>
+</section>
+<hr class="docutils" />
+<section id="residuals">
+<h2>6.3 Residuals<a class="headerlink" href="#residuals" title="Permalink to this heading">#</a></h2>
+<p>After a fit has been obtained, the emphasis falls not on the plot of the data but on analysing the residuals, a plot of which shows the difference between the data and the fitted line. The residuals are calculated for each data point as</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle \epsilon_i =(y_i - Y_i)\]</div>
+<p>where <span class="math notranslate nohighlight">\(Y_i\)</span> is the value of the calculated line at the <span class="math notranslate nohighlight">\(i^{th}\; x\)</span> value. The reduced or normalized
+residuals</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle r_i = (y_i - Y_i)/Y_i \qquad\tag{34}\]</div>
+<p>are often the best to use, particularly if the data varies in size, as may be the case for exponential data. The reduced residuals between the calculated line and the data are shown in figure 9 and should be randomly distributed about zero if the fit is good, which it would appear to be.</p>
+<p><img alt="Drawing" src="../_images/analysis-fig9.png" /></p>
+<p>Figure 9. Normalized or reduced residual plot</p>
+</section>
+<hr class="docutils" />
+<section id="chi-squared-chi-2">
+<h2>6.4 Chi squared, <span class="math notranslate nohighlight">\(\chi^2\)</span><a class="headerlink" href="#chi-squared-chi-2" title="Permalink to this heading">#</a></h2>
+<p>A good measure of the overall goodness of fit is the <span class="math notranslate nohighlight">\(\chi^2\)</span> parameter. This measures the dispersion between the experimental data and the fitted function. If the data is normally distributed then the <span class="math notranslate nohighlight">\(\chi^2\)</span> is expected to be equal to the number of degrees of freedom; this is the number of data points less the constraints, two in the case of a linear fit since there are two parameters. (The reduced <span class="math notranslate nohighlight">\(\chi^2\)</span> is the same quantity as mean square error (mse) used in Algorithm 2). The reduced <span class="math notranslate nohighlight">\(\chi^2\)</span> should have a value close to one if the data is fitted well, and the probability of obtaining this value is <span class="math notranslate nohighlight">\(50\)</span>% since half of the time the <span class="math notranslate nohighlight">\(\chi^2\)</span> should exceed the norm. Values are often either very small, which can indicate that the weighting is too small because the standard deviations used are too big, or very large because the model does not fit the data. If the data is Poisson distributed, then the standard deviation is known exactly and the <span class="math notranslate nohighlight">\(\chi^2\)</span> can be used quantitatively, otherwise, it can only be used loosely and a probability of <span class="math notranslate nohighlight">\(10\)</span>% or larger is usually acceptable.</p>
+<p>To find the probability of the <span class="math notranslate nohighlight">\(\chi^2\)</span> being greater than a certain value, say <span class="math notranslate nohighlight">\(0.843\)</span> which is the value for the data in figure 8 the distribution has to be integrated up to that value, just as was done for the normal and <span class="math notranslate nohighlight">\(t\)</span> distributions discussed earlier. Using Python/Scipy this is</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">2</span>                <span class="c1"># degrees of freedom is n - 2 for two fitting parameters</span>
+<span class="n">chi</span><span class="o">=</span> <span class="mf">0.843</span><span class="o">*</span><span class="n">df</span>             <span class="c1"># make into normal chi squared not reduced chi.</span>
+<span class="n">cumul</span> <span class="o">=</span>  <span class="k">lambda</span> <span class="n">w</span><span class="p">,</span><span class="n">df</span><span class="p">:</span> <span class="n">chi2</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="n">df</span><span class="p">)</span>  <span class="c1"># define function </span>
+<span class="n">Q</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">cumul</span><span class="p">(</span><span class="n">chi</span><span class="p">,</span><span class="n">df</span><span class="p">)</span>
+<span class="n">Q</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/49bcc7e361f126b6e4941479edf08d80bb36735dcdeedae73d46d56993c7631e.png" src="../_images/49bcc7e361f126b6e4941479edf08d80bb36735dcdeedae73d46d56993c7631e.png" />
+</div>
+</div>
+<p>and this means that the probability of obtaining a <span class="math notranslate nohighlight">\(\chi^2\)</span> greater than <span class="math notranslate nohighlight">\(0.84df\)</span> is <span class="math notranslate nohighlight">\(56\)</span>% for eight degrees of freedom, ten data points and two fitted paramaters. This is equivalent to the integral of the <span class="math notranslate nohighlight">\(\chi^2\)</span> distribution from <span class="math notranslate nohighlight">\(\chi^2 \to \infty\)</span>. The distribution function is</p>
+<div class="math notranslate nohighlight">
+\[ \displaystyle f_{\chi^2}(x,n)=\frac{2^{n/2}}{\Gamma(n/2)}x^{n/2-1}e^{-x/2} \]</div>
+<p>where <span class="math notranslate nohighlight">\(\Gamma\)</span> is the gamma function. Because the distribution cannot be less than zero, it is not symmetrical and has a shape skewed towards small values. The integral to find the probability is</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle Q= \int_{\chi^2}^\infty f_{\chi^2}(x,n) dx \qquad\tag{35}\]</div>
+<p>which is done numerically below using the <span class="math notranslate nohighlight">\(\mathtt{quad()}\)</span> integrator.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mf">8.0</span>
+<span class="n">chi</span> <span class="o">=</span> <span class="mf">0.843</span><span class="o">*</span><span class="n">n</span>
+<span class="n">fchi</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">gamma</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">Q</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">quad</span><span class="p">(</span><span class="n">fchi</span> <span class="p">,</span><span class="n">chi</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span> <span class="p">)</span>                <span class="c1"># returns both integral value and its numerical error</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:s}</span><span class="s1"> </span><span class="si">{:6.3f}</span><span class="s1"> </span><span class="si">{:s}</span><span class="s1"> </span><span class="si">{:6.3f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;probability of getting chi sqrd &gt; &#39;</span><span class="p">,</span><span class="n">chi</span><span class="p">,</span><span class="s1">&#39; is&#39;</span><span class="p">,</span> <span class="n">Q</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>probability of getting chi sqrd &gt;   6.744  is  0.564
+</pre></div>
+</div>
+</div>
+</div>
+<p>Generally speaking if <span class="math notranslate nohighlight">\(Q&gt;0.001\)</span> the model is acceptable, and although this seems rather lax, if the model is wrong <span class="math notranslate nohighlight">\(Q\)</span> will be <em>orders of magnitude</em> smaller.  Experience shows that several a good ‘rule of thumb’ is that the reduced chi square is units or equivalently <span class="math notranslate nohighlight">\(\chi^2\approx df\)</span>. Prest et al. 1986 (Chapter 14 Numerical Recipes) has a detailed discussion on chi squared fitting. One important point is that this test of goodness of fit is very useful when the weighting for the data is not known, because the <span class="math notranslate nohighlight">\(\chi^2 \)</span> cannot then be used quantitatively.</p>
+<p>Other tests can be performed on the residuals to assess the goodness of fit.</p>
+<p><strong>(i)</strong><span class="math notranslate nohighlight">\(\quad\)</span> The simplest test is to look at the residuals; if they slope, oscillate, or are curved then the model does not fit the data, no matter what the statistics indicate.</p>
+<p><strong>(ii)</strong><span class="math notranslate nohighlight">\(\quad\)</span> The residuals can be plotted on a normal probability plot and if they are Gaussian (normally) distributed, a straight line is produced.</p>
+<p><strong>(iii)</strong><span class="math notranslate nohighlight">\(\quad\)</span> The number of positive and negative runs in the residuals can be calculated. A ‘run’ occurs when consecutive residuals have the same sign, which is unlikely to occur if they are random. Therefore, if the data is random, then there are an equal number of small runs of positive and of negative numbers.</p>
+<p><strong>(iv)</strong><span class="math notranslate nohighlight">\(\quad\)</span> The autocorrelation of the data should be 1 for the first point, and randomly arranged about zero for the rest, which is expected for a sequence of random numbers.</p>
+<p><strong>(v)</strong><span class="math notranslate nohighlight">\(\quad\)</span> A scedaticity plot aims to determine if the residuals vary with the size of the data itself, i.e. if the errors are larger when the data value is larger or vice versa. The plot is of residuals vs. the experimental <span class="math notranslate nohighlight">\(y\)</span> value. The points should be randomly distributed about zero.</p>
+<p>A good model will produce a small residual (error) variance and if there are two or more competing models then the model with the smallest error variance should be chosen. The variance of the slope and intercept are calculated by expressing the respective equations as functions of <span class="math notranslate nohighlight">\(y_i\)</span> (the experimental data) and using the law of propagation (combination) of errors. The gradient is the ratio <span class="math notranslate nohighlight">\(b = S_{xy} /S_{xx}\)</span> and only the numerator depends on <span class="math notranslate nohighlight">\(y_i\)</span>. Using the relationships</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle S_{xy}=\sum_{i=1}^n w_iy_i(x_i-\langle x\rangle),\quad  S_{xx}=\sum_{i=1}^n w_i(x_i-\langle x\rangle)^2\]</div>
+<p>Hines &amp; Montgomery (Probability &amp; Statistics in Engineering &amp; Management Sciences, pub Wiley 1990) give the variance for slope <span class="math notranslate nohighlight">\(b\)</span> as</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle \sigma_b^2=\frac{\sigma^2}{S_{xx}} \qquad\tag{36}\]</div>
+<p>and for the intercept <span class="math notranslate nohighlight">\(a\)</span></p>
+<div class="math notranslate nohighlight">
+\[\displaystyle \sigma_a^2=\sigma^2\left(\frac{1}{S_w}+\frac{\langle x\rangle}{S_{xx}}\right)\qquad\tag{37}\]</div>
+<p>To use these equations it is necessary to obtain an estimate of the variance <span class="math notranslate nohighlight">\(\sigma^2\)</span>. For the simple linear model an unbiased estimate of the variance of the error <span class="math notranslate nohighlight">\(\epsilon_i\)</span> is given by the reduced <span class="math notranslate nohighlight">\(\chi^2\)</span> as <span class="math notranslate nohighlight">\(\sigma_\epsilon^2\equiv \chi^2/(n-2)\)</span>. THis can be written in terms of quantities already calculated (Hines &amp; Montgomery 1990)  and is called the mean square error, <em>mse</em> used in algorithm 2. Then,</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle \sigma_\epsilon^2=\frac{S_{yy}-bS_{xy}}{n-2}\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle \sigma_b^2=\frac{\sigma_\epsilon^2}{S_{xx}}, \quad \sigma_a^2=\sigma_\epsilon^2\left(\frac{1}{S_w}+\frac{\langle x\rangle}{S_{xx}}\right)\qquad\tag{38}\]</div>
+<p>with values <span class="math notranslate nohighlight">\(0.0056\)</span> and <span class="math notranslate nohighlight">\(1.54\)</span> for the data in figure 8.</p>
+<p>Alternative estimates of the variance in the coefficients are quoted by Bevington &amp; Robinson (2003),</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle \sigma_a^2=\frac{\sum_iw_ix_i^2}{S_wS{_{xx}}},\quad \sigma_b^2= \frac{1}{S_{xx}}\qquad\tag{39}\]</div>
+<p>These variances are calculated by using the equation for error propagation, equation 20, differentiating with respect to each <span class="math notranslate nohighlight">\(y_i\)</span>. However, these equations should not be used unless the weightings are known, which they are for photon counting experiments. If weightings are unknown and a constant weighting used instead, incorrect results are obtained because both expressions 39 now depend only on <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<p>The covariance between the slope and intercept can also be calculated. If this is large then the slope and intercept are not independent of one another. The covariance for the data used above is <span class="math notranslate nohighlight">\(-5\cdot10^{-4}\)</span> which is very small. When several parameters are being estimated such as in a polynomial or nonlinear, least squares calculation then the covariance between pairs of parameters should be examined and is often reported as a matrix of value. Ideally, each values should be small. The covariance for the linear least squares is <span class="math notranslate nohighlight">\(\mathrm{cov} = -\sigma_\epsilon^2\langle x \rangle/(S_{xx} /S_w)\)</span> as may be seen on the code.</p>
+</section>
+<section id="confidence-intervals">
+<h2>6.5 Confidence intervals<a class="headerlink" href="#confidence-intervals" title="Permalink to this heading">#</a></h2>
+<p>The confidence intervals about any data point, and hence the whole set, can be obtained from the data. The width of these lines at a given confidence level, 95% is typical, is a measure of the overall quality of fit to the data. As the errors <span class="math notranslate nohighlight">\(\epsilon_i\)</span> are assumed to be normally distributed and independent of one another, then the slope has the confidence interval (Hines &amp; Montgomery 1990)</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle b_0=b\pm t_{\alpha/2}\sqrt{\frac{\sigma_\epsilon^2}{S_{xx}}}\qquad\tag{40}\]</div>
+<p>giving <span class="math notranslate nohighlight">\(b_0=0.234\pm 0.0128\)</span> and for the intercept where <span class="math notranslate nohighlight">\(S_w=\sum w_i\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle a_0=a\pm t_{\alpha/2}\sqrt{ \sigma_\epsilon^2\left(\frac{1}{S_w}+\frac{\langle x\rangle^2}{S_{xx}} \right) }\qquad\tag{41}\]</div>
+<p>which has a value <span class="math notranslate nohighlight">\(a_0=-9.27\pm 3.55\)</span> or better <span class="math notranslate nohighlight">\(a=-9\pm 4\)</span>, see figure 8.</p>
+<p>The confidence for the mean point can be constructed and this is also called the confidence line <span class="math notranslate nohighlight">\(z\)</span> for the regression curve. It has the following form (Hines &amp; Montgomery 1990)</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle z=y\pm t_{\alpha/2}\sqrt{ \sigma_\epsilon^2\left(\frac{1}{S_w}+\frac{(x-\langle x\rangle)^2}{S_{xx}} \right) }\qquad\tag{42}\]</div>
+<p>and these lines are shown in Figure 8. The two curves have a minimum width at <span class="math notranslate nohighlight">\(\langle x\rangle\)</span> and widen either side of this. Strictly, they are not valid outside the range of the data. Prediction lines can be constructed to project confidence limits past the data and these lines are slightly wider than the confidence lines. The prediction lines are produced by replacing <span class="math notranslate nohighlight">\(1/S_w\)</span> by <span class="math notranslate nohighlight">\(1 + 1/S_w\)</span> in equation 42. This takes into account the error from the model and that associated with future observations. The two sets of curves are almost identical with the particular set of data used in figure 8.</p>
+</section>
+<section id="the-analysis-of-variance-anova-table">
+<h2>6.6 The analysis of variance (ANOVA) table<a class="headerlink" href="#the-analysis-of-variance-anova-table" title="Permalink to this heading">#</a></h2>
+<p>When fitting models to data, it is common practice to test the fit to see how well the model equation used fits the data. This is done by partitioning the total variability in the calculated <span class="math notranslate nohighlight">\(Y\)</span> into a sum that is ‘explained’ by the model and a ‘residual’ or error term unexplained by the regression as shown in the equations,</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle \sum_i(y_i -\langle y\rangle)^2=\sum_i (Y_i-\langle y \rangle )^2 +\sum_i (y_i-Y_i)^2, \quad S_{yy}=SS_R+SS_e \]</div>
+<p>The terms on the right are, respectively, the sum of squares ‘explained’ by regression <span class="math notranslate nohighlight">\(SS_R\)</span> and the residual (error) sum of squares <span class="math notranslate nohighlight">\(SS_e\)</span>. Recall that <span class="math notranslate nohighlight">\(y_i\)</span> are the data points and <span class="math notranslate nohighlight">\(Y_i\)</span> the fitted points from the model. The left-hand summation is</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle S_{yy}=\sum_i w_iy_i-\frac{\left(\sum_iw_iy_i\right)^2}{\sum_i w_i}\]</div>
+<p>and the right-hand one is</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle \sum_i(y_i-Y-i)^2=\sigma_e(n-2),\quad \text{ or }\quad SS_e= S_{yy}-S_{xy}/S_{xx}\]</div>
+<p>the middle term <span class="math notranslate nohighlight">\(SS_R\)</span> is found from the difference of the other terms.</p>
+<p>The purpose of the table is to generate a statistic <span class="math notranslate nohighlight">\(F_0\)</span> that can be tested against tables of the <span class="math notranslate nohighlight">\(f\)</span> distribution. The ANOVA table is constructed as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\displaystyle \begin{array}{llccc}
+\hline
+\text{Source of variation } &amp; \text{Sum squares } ss &amp; \text{Degree freedom } df &amp; \text{Mean square } ss/df &amp; F_0\\
+\hline
+\text{Regression } &amp; S_{xy}^2 /S_{xx} &amp;  1 &amp;MS_R \text{(regression)} &amp; MS_R/MS_e \\
+\text{Residual error } SS_e &amp; S_{yy} - S_{xy}^2 /S_{xx} &amp; n - 2 &amp; MS_e \text{(error)}\\
+\text{Total } &amp; S_{yy} &amp; n-1 &amp; \\
+\hline \end{array}\end{split}\]</div>
+<p>The data being considered (Figure 8) produces the following table</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\displaystyle \begin{array}{llccc}
+\hline
+\text{Source of variation } &amp; \text{Sum squares } ss &amp; \text{Degree freedom } df &amp; \text{Mean square } ss/df &amp; F_0\\
+\hline
+\text{Regression } &amp; 1449 &amp;  1 &amp;1449 &amp; 1778 \\
+\text{Residual error } SS_e &amp; 6.7 &amp; 8 &amp; 6.7/8=0.84\\
+\text{Total } &amp; 1506 &amp; 9 &amp; \\
+\hline \end{array}\end{split}\]</div>
+<p>The ANOVA table also leads to a test of ‘significance’ for the model. It can be shown that if the model has no utility, i.e. if the model linking <span class="math notranslate nohighlight">\(x\)</span> to <span class="math notranslate nohighlight">\(y\)</span> does not differ ‘significantly’ from zero, then the statistic</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle  F_0=\frac{ \text{Mean Square for Regression}}{\text{Mean Square for Error}} \]</div>
+<p>should behave like a random variable from an <span class="math notranslate nohighlight">\(F\)</span>-distribution with <span class="math notranslate nohighlight">\(1\)</span> and <span class="math notranslate nohighlight">\((n - 2)\)</span> degrees of freedom. (<span class="math notranslate nohighlight">\(F\)</span>-distributions are tabulated in many books on statistics but can be calculated using Python, as shown below.) Values close to <span class="math notranslate nohighlight">\(1.0\)</span> support the null hypothesis that the model <em>does not fit the data</em> well, while large extreme values, exceeding some critical value from the upper tail of the <span class="math notranslate nohighlight">\(F\)</span>-distribution, lead to the conclusion that <span class="math notranslate nohighlight">\(x\)</span> has a significant effect upon <span class="math notranslate nohighlight">\(y\)</span>.</p>
+<p>The null hypothesis, called <span class="math notranslate nohighlight">\(H_0\)</span>, is one where model does not fit the data, versus <span class="math notranslate nohighlight">\(H_1\)</span> where it does fit the data. To test this, the calculated <span class="math notranslate nohighlight">\(F_0 = 1778\)</span>  greatly exceeds the critical value <span class="math notranslate nohighlight">\(11.26\)</span> at the <span class="math notranslate nohighlight">\(1\)</span>% level calculated from the <span class="math notranslate nohighlight">\(F\)</span>-distribution <span class="math notranslate nohighlight">\(f(0.01, 1, n -2)\)</span>. This suggests that <span class="math notranslate nohighlight">\(x\)</span> has a significant effect upon <span class="math notranslate nohighlight">\(y\)</span>. This result from the ANOVA table is hardly surprising because the data is clearly well described by a straight line.</p>
+<p>The critical value of <span class="math notranslate nohighlight">\(F_0\)</span> is calculated using Python with the <span class="math notranslate nohighlight">\(f\)</span> distribution loaded via scipy.stats defined  the top of the page. (You must avoid using symbol <span class="math notranslate nohighlight">\(f\)</span> in any other python as this overwrites the stats value). The ppf function below gives the quantile value needed at the <span class="math notranslate nohighlight">\(1\)</span>% level, hence the <span class="math notranslate nohighlight">\(0.99\)</span> used below,</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.99</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>    <span class="c1"># f is name of distribution, see top of page, from scipy.stats ....</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/918c22e4cc08a04c904817ca7527ee2e0e1c9c430de8fed3ad951e60bc99f9bb.png" src="../_images/918c22e4cc08a04c904817ca7527ee2e0e1c9c430de8fed3ad951e60bc99f9bb.png" />
+</div>
+</div>
+</section>
+<section id="correlation-coefficients">
+<h2>6.7 Correlation coefficients<a class="headerlink" href="#correlation-coefficients" title="Permalink to this heading">#</a></h2>
+<p>The correlation coefficient <span class="math notranslate nohighlight">\(R\)</span> is often listed among the parameters when a spreadsheet or graphing package is used to analyse a straight line fit. It represents the proportion of the variation (information) in <span class="math notranslate nohighlight">\(y\)</span> that can be accounted for by its relationship with <span class="math notranslate nohighlight">\(x\)</span>. However, in the physical and many of the biological sciences, this is a not a useful quantity and <em>should be avoided</em> as a measure of how well a straight line describes the data.</p>
+<p>The reason is that what would be considered as a good fit has a correlation coefficient of, for example, <span class="math notranslate nohighlight">\(R = 0.99\)</span> and a poor fit perhaps a value of <span class="math notranslate nohighlight">\(0.98\)</span>, which is so similar that it provides very poor discrimination between good and bad fits. This poor discrimination is illustrated if larger and larger random numbers are added to the data and the least squares fitting repeated until <span class="math notranslate nohighlight">\(R\)</span> decreases slightly to <span class="math notranslate nohighlight">\(0.98\)</span>. However, the reduced <span class="math notranslate nohighlight">\(\chi^2\)</span> has now increased to <span class="math notranslate nohighlight">\(\approx 8\)</span> i.e. by about ten times, instead of being <span class="math notranslate nohighlight">\(\approx 1\)</span>, indicating that now, with the added random values, the model is a very poor fit to the data.</p>
+<p>If <span class="math notranslate nohighlight">\(R\)</span> is the sample correlation coefficient then <span class="math notranslate nohighlight">\(0 \lt R \lt 1\)</span> and is defined as <span class="math notranslate nohighlight">\(R = b\sqrt{S_{xx} /S_{yy}}\)</span> and
+as the <span class="math notranslate nohighlight">\(S_{xx}\)</span> and <span class="math notranslate nohighlight">\(S_{yy}\)</span> depend only on the data points, the ratio is a constant multiplied by the gradient <span class="math notranslate nohighlight">\(b\)</span> and this is why it is a poor statistic. The constant part is the ‘spread’ of the <span class="math notranslate nohighlight">\(x\)</span> values divided by that of the <span class="math notranslate nohighlight">\(y\)</span>.</p>
+</section>
+<section id="what-function-should-i-use-for-a-linear-fit-y-bx-or-y-a-bx">
+<h2>6.8 What function should I use for a linear fit, <span class="math notranslate nohighlight">\(y=bx\)</span> or <span class="math notranslate nohighlight">\(y=a+bx\)</span> ?<a class="headerlink" href="#what-function-should-i-use-for-a-linear-fit-y-bx-or-y-a-bx" title="Permalink to this heading">#</a></h2>
+<p>After completing an experiment you will have data that describes the effect that you are examining. You should also have a model/hypothesis that produces an equation that describes the same effect. We will suppose, for simplicity, that you need a linear least squares fit to your data to obtain the parameters in your model.</p>
+<p>A basic undergraduate experiment is to use a spectrophotometer to measure the optical density of a series of solutions of known concentration to form a calibration curve, and then to determine an unknown concentration. The calibration curve has the simple form</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle D_\lambda=\epsilon_\lambda[C]\ell\]</div>
+<p>where <span class="math notranslate nohighlight">\(D_\lambda\)</span> is the optical density, at wavelength <span class="math notranslate nohighlight">\(\lambda\)</span>, <span class="math notranslate nohighlight">\(\epsilon_\lambda\)</span> the extinction coefficient,  <span class="math notranslate nohighlight">\(\ell\)</span> the sample path length and <span class="math notranslate nohighlight">\([C]\)</span> the concentration, thus the gradient is <span class="math notranslate nohighlight">\(\epsilon_\lambda \ell\)</span>. A second example is the Stern_Volmer equation, which describes the relative fluorescence yield as a result of quenching at quencher concentration <span class="math notranslate nohighlight">\([Q]\)</span>. (See Chapter 10, Q10 and Q8 of this Chapter). This equation has the form</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle \frac{\varphi}{\varphi_0}=1+K[Q]\tag{42 a}\]</div>
+<p>The fluorescence yield is <span class="math notranslate nohighlight">\(\varphi\)</span> at quencher concentration <span class="math notranslate nohighlight">\([Q]\)</span>, <span class="math notranslate nohighlight">\(\varphi_0\)</span> the yield without quencher and <span class="math notranslate nohighlight">\(K\)</span> the Stern-Volmer constant. This equation can also be written equivalently as</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle \frac{\varphi}{\varphi_0}-1 = K[Q]\tag{42 b}\]</div>
+<p>and so has the simpler mathematical form <span class="math notranslate nohighlight">\(y=bx\)</span>. The question remains, however, should these data be analysed using either <span class="math notranslate nohighlight">\(y=bx\)</span> or <span class="math notranslate nohighlight">\(y=a+bx\)</span> even though theoretically <span class="math notranslate nohighlight">\(a=0\)</span>.</p>
+<p>The answer is always to use <span class="math notranslate nohighlight">\(y = a+bx\)</span> for the simple reason that any experimental measurement always contains some noise and that noise has a distribution of values. Of course there is also the additional possibility of some bias has crept into the measurement such as an unexpected and systematic error. Additionally experiment measures what actually happens and the equation, from theory, used may not adequately describe this. For all of these reasons it is always best for linear least-squares to use <span class="math notranslate nohighlight">\(y=a+bx\)</span>. The Stern-Volmer equation should therefore be used as eqn. 42a with the expectation that <span class="math notranslate nohighlight">\(a=1\pm \sigma\)</span>, where the error in the intercept can be analysed to see if it is within what is expected at, say, a <span class="math notranslate nohighlight">\(95\)</span>% level. If it is not, and the error in the gradient is also large then one may suspect that the model used does not describe the data or that some other unexpected error is involved. If eqn. <span class="math notranslate nohighlight">\(42b\)</span> has been used then such important information is lost and the analysis may seem correct but is misleading.</p>
+<p>The result of analysing data described as <span class="math notranslate nohighlight">\(y=5+10x\)</span> is shown below, where normally distributed noise is added. The results of a typical fit shown in. fig 9a (left). You can see that in this particular case the gradient of the <span class="math notranslate nohighlight">\(a+bx\)</span> fit is slightly less than the true value while that for <span class="math notranslate nohighlight">\(y=bx\)</span> is too large. After <span class="math notranslate nohighlight">\(1000\)</span> similar trials a histogram of the least squares gradient is plotted for both cases, fig. 9a (right). It is clear that while both sets of data produce a distribution of gradients, only the plot of <span class="math notranslate nohighlight">\(y=a+bx\)</span> produces, on average, the correct gradient as shown by the vertical line at <span class="math notranslate nohighlight">\(b=10\)</span>. The distribution of gradients is a gaussian whose width is proportional to the standard deviation of the slope.</p>
+<p>These plots also illustrate that although the least squares gives the best fit to the data, this is usually slightly different to the true value, which is entirely to be expected given the nature of the noise, i.e. the noise always has a distribution and this is reflected in the distribution of results obtained. These distributions also illustrate the necessity of repeated measurements, for only by repeated measurements can the true value be approached. Of course, the true value might be obtained by chance with the first measurement, however, you will not know that this is the case.</p>
+<p><img alt="Drawing" src="../_images/analysis-fig9a.png" /></p>
+<p>Figure 9a. Left. The function <span class="math notranslate nohighlight">\(y=5+10x\)</span> is shown as a thick grey line. Data points (<span class="math notranslate nohighlight">\(y\)</span>) with noise added (blue circles) from a normal distribution with <span class="math notranslate nohighlight">\(\sigma=1, \mu=0\)</span>. The blue dashed line is the fit to the same data points using <span class="math notranslate nohighlight">\(y=a+bx\)</span> and the red dashed line using <span class="math notranslate nohighlight">\(y=bx\)</span>. Right. This plot shows histograms of the gradients for the two fitting functions after <span class="math notranslate nohighlight">\(1000\)</span> calculations. The vertical line at <span class="math notranslate nohighlight">\(b=10\)</span> shows the true gradient. The gray dotted lines show the (average) standard deviation of the slope, <span class="math notranslate nohighlight">\(b\pm\sigma\)</span> for the fits making up the histogram and has a value of <span class="math notranslate nohighlight">\(\approx 0.56\)</span></p>
+</section>
+<section id="over-parameterising">
+<h2>Over-parameterising<a class="headerlink" href="#over-parameterising" title="Permalink to this heading">#</a></h2>
+<p>Finally, a note on over-parameterising the fit. If we use <span class="math notranslate nohighlight">\(y=a+bx\)</span> perhaps <span class="math notranslate nohighlight">\(y=a+bx+cx^2\)</span> might be better? The way to check this is to observe the fitted data using this non-linear function starting from different initial values. If the data is actually a straight line then the parameters <span class="math notranslate nohighlight">\(b\)</span> and <span class="math notranslate nohighlight">\(c\)</span> compensate for one another, i.e. lots of pairs of <span class="math notranslate nohighlight">\(b,c\)</span> will give practically identical fits and thus similar overall error and a similar error to the linear fit. Of course the context is important here, there has to be a reason based on the science to use a different fitting function, otherwise all one is doing is smoothing the data with an arbitrary function.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapter-13"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="analysis-Q1-3.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Questions 1 - 3</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="analysis-Q4-9.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Questions 4 - 9</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#concept">6.1 Concept</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-least-squares-calculation-for-a-straight-line">6.2 The least squares calculation for a straight line</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#residuals">6.3 Residuals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chi-squared-chi-2">6.4 Chi squared, <span class="math notranslate nohighlight">\(\chi^2\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confidence-intervals">6.5 Confidence intervals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-analysis-of-variance-anova-table">6.6 The analysis of variance (ANOVA) table</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-coefficients">6.7 Correlation coefficients</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-function-should-i-use-for-a-linear-fit-y-bx-or-y-a-bx">6.8 What function should I use for a linear fit, <span class="math notranslate nohighlight">\(y=bx\)</span> or <span class="math notranslate nohighlight">\(y=a+bx\)</span> ?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#over-parameterising">Over-parameterising</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Godfrey Beddard
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
