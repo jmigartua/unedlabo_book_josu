@@ -426,28 +426,8 @@ document.write(`
 <span class="o">%</span><span class="k">matplotlib</span> inline
 
 <span class="n">rc</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">usetex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">matplotlib</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;text.latex.preamble&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s1">&#39;\usepackage</span><span class="si">{amsmath}</span><span class="s1">&#39;</span><span class="p">]</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;text.latex.preamble&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;\usepackage</span><span class="si">{amsmath}</span><span class="s1">&#39;</span>
 <span class="c1">#!apt install texlive-fonts-recommended texlive-fonts-extra cm-super dvipng</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">17</span>
-<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="s1">&#39;matplotlib&#39;</span><span class="p">,</span> <span class="s1">&#39;inline&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="n">rc</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">usetex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">17</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;text.latex.preamble&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s1">&#39;\usepackage</span><span class="si">{amsmath}</span><span class="s1">&#39;</span><span class="p">]</span>
-<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="c1">#!apt install texlive-fonts-recommended texlive-fonts-extra cm-super dvipng</span>
-
-<span class="nn">File ~/anaconda3/envs/jupyterbooks/lib/python3.11/site-packages/matplotlib/__init__.py:734,</span> in <span class="ni">RcParams.__setitem__</span><span class="nt">(self, key, val)</span>
-<span class="g g-Whitespace">    </span><span class="mi">732</span>         <span class="n">cval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">[</span><span class="n">key</span><span class="p">](</span><span class="n">val</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">733</span>     <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">ve</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">734</span>         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Key </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">ve</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
-<span class="g g-Whitespace">    </span><span class="mi">735</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_set</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">cval</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">736</span> <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-
-<span class="ne">ValueError</span>: Key text.latex.preamble: Could not convert [&#39;\\usepackage{amsmath}&#39;] to str
 </pre></div>
 </div>
 </div>
@@ -517,64 +497,55 @@ document.write(`
 <h2>2024-05-10<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;resistencia&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">10.</span><span class="p">,</span><span class="mf">20.</span><span class="p">,</span><span class="mf">50.</span><span class="p">,</span><span class="mf">70.</span><span class="p">,</span><span class="mf">100.</span><span class="p">,</span><span class="mf">150.</span><span class="p">],</span>
-                       <span class="s1">&#39;voltaje&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1371.</span><span class="p">,</span><span class="mf">1420.</span><span class="p">,</span><span class="mf">1452.</span><span class="p">,</span><span class="mf">1461.</span><span class="p">,</span><span class="mf">1465.</span><span class="p">,</span><span class="mf">1469.</span><span class="p">]})</span>
-
-<span class="n">data_2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;resistencia&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">10.</span><span class="p">,</span><span class="mf">20.</span><span class="p">,</span><span class="mf">50.</span><span class="p">,</span><span class="mf">100.</span><span class="p">,</span><span class="mf">150.</span><span class="p">],</span>
-                       <span class="s1">&#39;voltaje&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">241.</span><span class="p">,</span><span class="mf">416.</span><span class="p">,</span><span class="mf">727.</span><span class="p">,</span><span class="mf">973.</span><span class="p">,</span><span class="mf">1097.</span><span class="p">]})</span>
-
-<span class="n">data_3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;resistencia&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">20.</span><span class="p">,</span><span class="mf">50.</span><span class="p">,</span><span class="mf">70.</span><span class="p">,</span><span class="mf">100.</span><span class="p">,</span><span class="mf">150.</span><span class="p">],</span>
-                       <span class="s1">&#39;voltaje&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">719.</span><span class="p">,</span><span class="mf">1036.</span><span class="p">,</span><span class="mf">1132.</span><span class="p">,</span><span class="mf">1217.</span><span class="p">,</span><span class="mi">1291</span><span class="p">]})</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#data_1 = pd.DataFrame({&#39;resistencia&#39;: [10.,20.,50.,70.,100.,150.],</span>
+<span class="c1">#                       &#39;voltaje&#39;: [1371.,1420.,1452.,1461.,1465.,1469.]})</span>
+<span class="c1">#</span>
+<span class="c1">#data_2 = pd.DataFrame({&#39;resistencia&#39;: [10.,20.,50.,100.,150.],</span>
+<span class="c1">#                       &#39;voltaje&#39;: [241.,416.,727.,973.,1097.]})</span>
+<span class="c1">#</span>
+<span class="c1">#data_3 = pd.DataFrame({&#39;resistencia&#39;: [20.,50.,70.,100.,150.],</span>
+<span class="c1">#                       &#39;voltaje&#39;: [719.,1036.,1132.,1217.,1291]})</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regresion_1</span> <span class="o">=</span> <span class="n">figura_regresion</span><span class="p">(</span><span class="n">data_1</span><span class="p">[</span><span class="s2">&quot;voltaje&quot;</span><span class="p">]</span><span class="o">/</span><span class="n">data_1</span><span class="p">[</span><span class="s2">&quot;resistencia&quot;</span><span class="p">],</span> <span class="n">data_1</span><span class="p">[</span><span class="s1">&#39;voltaje&#39;</span><span class="p">],</span>
-                               <span class="n">x_label</span><span class="o">=</span><span class="s2">&quot;$I~</span><span class="se">\\</span><span class="s2">textrm{(mA)}$&quot;</span><span class="p">,</span>
-                               <span class="n">y_label</span><span class="o">=</span><span class="s1">&#39;$V~</span><span class="se">\\</span><span class="s1">textrm{(mV)}$&#39;</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">values_data_1</span> <span class="o">=</span> <span class="n">regresion_1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">values_data_1</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;data_1&#39;</span> <span class="o">+</span> <span class="s1">&#39;.pdf&#39;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;pdf&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#regresion_1 = figura_regresion(data_1[&quot;voltaje&quot;]/data_1[&quot;resistencia&quot;], data_1[&#39;voltaje&#39;],</span>
+<span class="c1">#                               x_label=&quot;$I~\\textrm{(mA)}$&quot;,</span>
+<span class="c1">#                               y_label=&#39;$V~\\textrm{(mV)}$&#39;, save=False)</span>
+<span class="c1">#values_data_1 = regresion_1[1]</span>
+<span class="c1">#values_data_1</span>
+<span class="c1">#</span>
+<span class="c1">##plt.savefig(&#39;data_1&#39; + &#39;.pdf&#39;, format=&#39;pdf&#39;, dpi=180, bbox_inches=&quot;tight&quot;)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/d3c9d7bcfc51e4bccbb55915f31ddde0d07008db358aa45898293a0e39aa733e.png" src="../_images/d3c9d7bcfc51e4bccbb55915f31ddde0d07008db358aa45898293a0e39aa733e.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regresion_2</span> <span class="o">=</span> <span class="n">figura_regresion</span><span class="p">(</span><span class="n">data_2</span><span class="p">[</span><span class="s2">&quot;voltaje&quot;</span><span class="p">]</span><span class="o">/</span><span class="n">data_2</span><span class="p">[</span><span class="s2">&quot;resistencia&quot;</span><span class="p">],</span> <span class="n">data_2</span><span class="p">[</span><span class="s1">&#39;voltaje&#39;</span><span class="p">],</span>                               
-                               <span class="n">x_label</span><span class="o">=</span><span class="s2">&quot;$I~</span><span class="se">\\</span><span class="s2">textrm{(mA)}$&quot;</span><span class="p">,</span>
-                               <span class="n">y_label</span><span class="o">=</span><span class="s1">&#39;$V~</span><span class="se">\\</span><span class="s1">textrm{(mV)}$&#39;</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">values_data_2</span> <span class="o">=</span> <span class="n">regresion_2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">values_data_2</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;data_2&#39;</span> <span class="o">+</span> <span class="s1">&#39;.pdf&#39;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;pdf&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#regresion_2 = figura_regresion(data_2[&quot;voltaje&quot;]/data_2[&quot;resistencia&quot;], data_2[&#39;voltaje&#39;],                               </span>
+<span class="c1">#                               x_label=&quot;$I~\\textrm{(mA)}$&quot;,</span>
+<span class="c1">#                               y_label=&#39;$V~\\textrm{(mV)}$&#39;, save=False)</span>
+<span class="c1">#values_data_2 = regresion_2[1]</span>
+<span class="c1">#values_data_2</span>
+<span class="c1">#</span>
+<span class="c1">##plt.savefig(&#39;data_2&#39; + &#39;.pdf&#39;, format=&#39;pdf&#39;, dpi=180, bbox_inches=&quot;tight&quot;)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/ab6f485eb5cc84cc60e88eae5bb387fade04e39d3e785d83b3e7dcb8ff9af189.png" src="../_images/ab6f485eb5cc84cc60e88eae5bb387fade04e39d3e785d83b3e7dcb8ff9af189.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regresion_3</span> <span class="o">=</span> <span class="n">figura_regresion</span><span class="p">(</span><span class="n">data_3</span><span class="p">[</span><span class="s2">&quot;voltaje&quot;</span><span class="p">]</span><span class="o">/</span><span class="n">data_3</span><span class="p">[</span><span class="s2">&quot;resistencia&quot;</span><span class="p">],</span> <span class="n">data_3</span><span class="p">[</span><span class="s1">&#39;voltaje&#39;</span><span class="p">],</span>
-                               <span class="n">x_label</span><span class="o">=</span><span class="s2">&quot;$I~</span><span class="se">\\</span><span class="s2">textrm{(mA)}$&quot;</span><span class="p">,</span>
-                               <span class="n">y_label</span><span class="o">=</span><span class="s1">&#39;$V~</span><span class="se">\\</span><span class="s1">textrm{(mV)}$&#39;</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">values_data_3</span> <span class="o">=</span> <span class="n">regresion_3</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">values_data_3</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;data_3&#39;</span> <span class="o">+</span> <span class="s1">&#39;.pdf&#39;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;pdf&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#regresion_3 = figura_regresion(data_3[&quot;voltaje&quot;]/data_3[&quot;resistencia&quot;], data_3[&#39;voltaje&#39;],</span>
+<span class="c1">#                               x_label=&quot;$I~\\textrm{(mA)}$&quot;,</span>
+<span class="c1">#                               y_label=&#39;$V~\\textrm{(mV)}$&#39;, save=False)</span>
+<span class="c1">#values_data_3 = regresion_3[1]</span>
+<span class="c1">#values_data_3</span>
+<span class="c1">#</span>
+<span class="c1">##plt.savefig(&#39;data_3&#39; + &#39;.pdf&#39;, format=&#39;pdf&#39;, dpi=180, bbox_inches=&quot;tight&quot;)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/a94c1d8e75a8e74d4f5704d40c60e1f26e2b83071a0aaa70441fbfd6b0ab485b.png" src="../_images/a94c1d8e75a8e74d4f5704d40c60e1f26e2b83071a0aaa70441fbfd6b0ab485b.png" />
 </div>
 </div>
 </section>
