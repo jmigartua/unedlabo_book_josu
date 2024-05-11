@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 
 
@@ -6,9 +7,9 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>1 Characterizing experimental data. Accuracy, precision, mean and standard deviation &#8212; Applying Maths in the Chemical &amp; Biomolecular Sciences</title>
+    <title>1 Characterizing experimental data. Accuracy, precision, mean and standard deviation &#8212; Cositas</title>
   
   
   
@@ -43,8 +44,10 @@
   <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
@@ -65,6 +68,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'chapter-13/analysis-A';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Datos Práctica Electricidad I," href="20240510_representacion_datos.html" />
+    <link rel="prev" title="13. Data Analysis" href="analysis-intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -164,7 +169,14 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="analysis-intro.html">13. Data Analysis</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">1 Characterizing experimental data. Accuracy, precision, mean and standard deviation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="20240510_representacion_datos.html">Datos Práctica Electricidad I,</a></li>
+</ul>
+</li>
+</ul>
+
     </div>
 </nav></div>
     </div>
@@ -217,25 +229,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://mybinder.org/v2/gh/subblue/applying-maths-book/main?urlpath=lab/tree/applying_maths_book/chapter-13/analysis-A.ipynb" target="_blank"
-   class="btn btn-sm dropdown-item"
-   title="Launch onBinder"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  
-    <img src="../_static/images/logo_binder.svg">
-  </span>
-<span class="btn__text-container">Binder</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li><a href="https://colab.research.google.com/github/subblue/applying-maths-book/blob/main/applying_maths_book/chapter-13/analysis-A.ipynb" target="_blank"
+      <li><a href="https://colab.research.google.com/github/jmigartua/unedlabo_book_josu/blob/main/unedlabo_book_josu/chapter-13/analysis-A.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onColab"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -266,7 +260,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/subblue/applying-maths-book" target="_blank"
+      <li><a href="https://github.com/jmigartua/unedlabo_book_josu" target="_blank"
    class="btn btn-sm btn-source-repository-button dropdown-item"
    title="Source repository"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -283,7 +277,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/subblue/applying-maths-book/issues/new?title=Issue%20on%20page%20%2Fchapter-13/analysis-A.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/jmigartua/unedlabo_book_josu/issues/new?title=Issue%20on%20page%20%2Fchapter-13/analysis-A.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -478,52 +472,14 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># import all python add-ons etc that will be needed later on</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="s1">&#39;matplotlib&#39;</span><span class="p">,</span> <span class="s1">&#39;inline&#39;</span><span class="p">)</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">5</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="ne">----&gt; </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">quad</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">t</span><span class="p">,</span><span class="n">norm</span>      <span class="c1"># statistical functions</span>
 
-<span class="nn">File ~/anaconda3/envs/jupyterbooks/lib/python3.11/site-packages/IPython/core/interactiveshell.py:2432,</span> in <span class="ni">InteractiveShell.run_line_magic</span><span class="nt">(self, magic_name, line, _stack_depth)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2430</span>     <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;local_ns&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_local_scope</span><span class="p">(</span><span class="n">stack_depth</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2431</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">builtin_trap</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">2432</span>     <span class="n">result</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2434</span> <span class="c1"># The code below prevents the output from being displayed</span>
-<span class="g g-Whitespace">   </span><span class="mi">2435</span> <span class="c1"># when using magics with decorator @output_can_be_silenced</span>
-<span class="g g-Whitespace">   </span><span class="mi">2436</span> <span class="c1"># when the last Python token in the expression is a &#39;;&#39;.</span>
-<span class="g g-Whitespace">   </span><span class="mi">2437</span> <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">magic</span><span class="o">.</span><span class="n">MAGIC_OUTPUT_CAN_BE_SILENCED</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
-
-<span class="nn">File ~/anaconda3/envs/jupyterbooks/lib/python3.11/site-packages/IPython/core/magics/pylab.py:99,</span> in <span class="ni">PylabMagics.matplotlib</span><span class="nt">(self, line)</span>
-<span class="g g-Whitespace">     </span><span class="mi">97</span>     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Available matplotlib backends: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">backends_list</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">98</span> <span class="k">else</span><span class="p">:</span>
-<span class="ne">---&gt; </span><span class="mi">99</span>     <span class="n">gui</span><span class="p">,</span> <span class="n">backend</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="o">.</span><span class="n">enable_matplotlib</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gui</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">args</span><span class="o">.</span><span class="n">gui</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">100</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_show_matplotlib_backend</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gui</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
-
-<span class="nn">File ~/anaconda3/envs/jupyterbooks/lib/python3.11/site-packages/IPython/core/interactiveshell.py:3606,</span> in <span class="ni">InteractiveShell.enable_matplotlib</span><span class="nt">(self, gui)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3585</span> <span class="k">def</span> <span class="nf">enable_matplotlib</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gui</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="g g-Whitespace">   </span><span class="mi">3586</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Enable interactive matplotlib and inline figure support.</span>
-<span class="g g-Whitespace">   </span><span class="mi">3587</span><span class="sd"> </span>
-<span class="g g-Whitespace">   </span><span class="mi">3588</span><span class="sd">     This takes the following steps:</span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3604</span><span class="sd">         display figures inline.</span>
-<span class="g g-Whitespace">   </span><span class="mi">3605</span><span class="sd">     &quot;&quot;&quot;</span>
-<span class="ne">-&gt; </span><span class="mi">3606</span>     <span class="kn">from</span> <span class="nn">matplotlib_inline.backend_inline</span> <span class="kn">import</span> <span class="n">configure_inline_support</span>
-<span class="g g-Whitespace">   </span><span class="mi">3608</span>     <span class="kn">from</span> <span class="nn">IPython.core</span> <span class="kn">import</span> <span class="n">pylabtools</span> <span class="k">as</span> <span class="n">pt</span>
-<span class="g g-Whitespace">   </span><span class="mi">3609</span>     <span class="n">gui</span><span class="p">,</span> <span class="n">backend</span> <span class="o">=</span> <span class="n">pt</span><span class="o">.</span><span class="n">find_gui_and_backend</span><span class="p">(</span><span class="n">gui</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pylab_gui_select</span><span class="p">)</span>
-
-<span class="n">File</span> <span class="o">~/</span><span class="n">anaconda3</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">jupyterbooks</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.11</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">matplotlib_inline</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">backend_inline</span><span class="p">,</span> <span class="n">config</span>  <span class="c1"># noqa</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;0.1.6&quot;</span>  <span class="c1"># noqa</span>
-
-<span class="n">File</span> <span class="o">~/</span><span class="n">anaconda3</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">jupyterbooks</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.11</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">matplotlib_inline</span><span class="o">/</span><span class="n">backend_inline</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">6</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;A matplotlib backend for publishing figures via display_data&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="c1"># Copyright (c) IPython Development Team.</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1"># Distributed under the terms of the BSD 3-Clause License.</span>
-<span class="ne">----&gt; </span><span class="mi">6</span> <span class="kn">import</span> <span class="nn">matplotlib</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">colors</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">from</span> <span class="nn">matplotlib.backends</span> <span class="kn">import</span> <span class="n">backend_agg</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;matplotlib&#39;
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;sympy&#39;
 </pre></div>
 </div>
 </div>
@@ -588,7 +544,7 @@ always necessary to check the equation being used, which unfortunately, is not a
 <p>where <span class="math notranslate nohighlight">\(\mu\)</span> is the mean of the distribution and <span class="math notranslate nohighlight">\(\sigma\)</span> the standard deviation. The central limit theorem forms the basis by which the standard deviation of a normal distribution is used to characterize data.</p>
 <p>The reasoning put more technically is that the sample mean <span class="math notranslate nohighlight">\(\langle x\rangle\)</span>, although an unbiased estimate, is unlikely to be exactly equal to the true population mean <span class="math notranslate nohighlight">\(\mu\)</span> and is itself subject to random variation. By repeating the sampling process, i.e. by repeating the whole set of measurements, a number of different estimates of <span class="math notranslate nohighlight">\(\langle x\rangle\)</span> are obtained which are distributed about the true value <span class="math notranslate nohighlight">\(\mu\)</span>. To simulate this and illustrate the central limit theorem, suppose that there are five measurements A, B, C, D, and E and each is an experimental result with values <span class="math notranslate nohighlight">\(1, 2, 3, 4\)</span>, and <span class="math notranslate nohighlight">\(5\)</span> respectively. Any other numbers could be used but these are easy to average. The distribution of the numbers is uniform as shown in figure 2.</p>
 <p>Suppose that randomly selected pairs of these values are taken making <span class="math notranslate nohighlight">\(2\)</span>5 possible samples. The pairs are shown on the left of the table and the corresponding average (sample mean) is shown on the right. Looking at this table there are five entries with a value of <span class="math notranslate nohighlight">\(3\)</span>, and only <span class="math notranslate nohighlight">\(1\)</span> entry each with a value of <span class="math notranslate nohighlight">\(1\)</span> or <span class="math notranslate nohighlight">\(5\)</span>. If plotted as a histogram, this begins to look a little like a normal distribution; figure 2.</p>
-<p><img alt="Drawing" src="chapter-13/analysis-table-1.png" /> <img alt="Drawing" src="../_images/analysis-fig2.png" /></p>
+<p><img alt="Drawing" src="../_images/analysis-table-1.png" /> <img alt="Drawing" src="../_images/analysis-fig2.png" /></p>
 <p>Figure 2. Uniform distribution and the (normalized) histogram formed by sampling pairs of numbers.</p>
 <hr class="docutils" />
 <p>Using Python the Central Limit theorem can be demonstrated more convincingly as shown with the next algorithm. The random numbers are chosen from a uniform, i.e. flat, distribution between zero and one. Five samples are taken each time and the process repeated five thousand times; see figure 3 for the result. It can be seen that the sample averages that form the histogram are more closely clustered about the population mean and are therefore less variable than the original data. It can be shown that the variation in the mean, which is the uncertainty in the mean, equals the variation in <span class="math notranslate nohighlight">\(\langle x\rangle\)</span> divided by the sample size,  <span class="math notranslate nohighlight">\(\sigma^2/n\)</span>. With this in mind the normal distribution plotted on top of the histogram of the data is</p>
@@ -1172,6 +1128,24 @@ V=\begin{bmatrix}\displaystyle\frac{\partial T}{\partial m}&amp;\displaystyle\fr
                 <footer class="prev-next-footer">
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="analysis-intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">13. Data Analysis</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="20240510_representacion_datos.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Datos Práctica Electricidad I,</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -1244,7 +1218,7 @@ V=\begin{bmatrix}\displaystyle\frac{\partial T}{\partial m}&amp;\displaystyle\fr
   <div class="footer-item">
     
 <p class="component-author">
-By Godfrey Beddard
+By Josu M. Igartua
 </p>
 
   </div>
