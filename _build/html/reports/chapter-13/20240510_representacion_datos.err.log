@@ -23,23 +23,36 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
+
+import matplotlib
+from matplotlib import rc
+import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import matplotlib.colors as mcolors
-
-plt.rc('text', usetex=True)
 plt.rcParams['errorbar.capsize'] = 3
 colors_fig = list(mcolors.TABLEAU_COLORS.values())
+%matplotlib inline
+
+rc('text', usetex=True)
+matplotlib.rcParams['text.latex.preamble'] = [r'\usepackage{amsmath}']
+#!apt install texlive-fonts-recommended texlive-fonts-extra cm-super dvipng
 ------------------
 
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-Cell [0;32mIn[1], line 4[0m
-[1;32m      1[0m [38;5;28;01mimport[39;00m [38;5;21;01mpandas[39;00m [38;5;28;01mas[39;00m [38;5;21;01mpd[39;00m
-[1;32m      2[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
-[0;32m----> 4[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m [38;5;28;01mas[39;00m [38;5;21;01mplt[39;00m
-[1;32m      5[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mgridspec[39;00m [38;5;28;01mas[39;00m [38;5;21;01mgridspec[39;00m
-[1;32m      6[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mticker[39;00m [38;5;28;01mas[39;00m [38;5;21;01mticker[39;00m
+[0;31mValueError[0m                                Traceback (most recent call last)
+Cell [0;32mIn[1], line 17[0m
+[1;32m     14[0m get_ipython()[38;5;241m.[39mrun_line_magic([38;5;124m'[39m[38;5;124mmatplotlib[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124minline[39m[38;5;124m'[39m)
+[1;32m     16[0m rc([38;5;124m'[39m[38;5;124mtext[39m[38;5;124m'[39m, usetex[38;5;241m=[39m[38;5;28;01mTrue[39;00m)
+[0;32m---> 17[0m [43mmatplotlib[49m[38;5;241;43m.[39;49m[43mrcParams[49m[43m[[49m[38;5;124;43m'[39;49m[38;5;124;43mtext.latex.preamble[39;49m[38;5;124;43m'[39;49m[43m][49m [38;5;241m=[39m [[38;5;124mr[39m[38;5;124m'[39m[38;5;124m\[39m[38;5;124musepackage[39m[38;5;132;01m{amsmath}[39;00m[38;5;124m'[39m]
+[1;32m     18[0m [38;5;66;03m#!apt install texlive-fonts-recommended texlive-fonts-extra cm-super dvipng[39;00m
 
-[0;31mModuleNotFoundError[0m: No module named 'matplotlib'
+File [0;32m~/anaconda3/envs/jupyterbooks/lib/python3.11/site-packages/matplotlib/__init__.py:734[0m, in [0;36mRcParams.__setitem__[0;34m(self, key, val)[0m
+[1;32m    732[0m         cval [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mvalidate[key](val)
+[1;32m    733[0m     [38;5;28;01mexcept[39;00m [38;5;167;01mValueError[39;00m [38;5;28;01mas[39;00m ve:
+[0;32m--> 734[0m         [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m([38;5;124mf[39m[38;5;124m"[39m[38;5;124mKey [39m[38;5;132;01m{[39;00mkey[38;5;132;01m}[39;00m[38;5;124m: [39m[38;5;132;01m{[39;00mve[38;5;132;01m}[39;00m[38;5;124m"[39m) [38;5;28;01mfrom[39;00m [38;5;28;01mNone[39;00m
+[1;32m    735[0m     [38;5;28mself[39m[38;5;241m.[39m_set(key, cval)
+[1;32m    736[0m [38;5;28;01mexcept[39;00m [38;5;167;01mKeyError[39;00m [38;5;28;01mas[39;00m err:
+
+[0;31mValueError[0m: Key text.latex.preamble: Could not convert ['\\usepackage{amsmath}'] to str
 

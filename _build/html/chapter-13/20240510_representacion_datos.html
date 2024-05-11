@@ -415,12 +415,39 @@ document.write(`
 
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">matplotlib.gridspec</span> <span class="k">as</span> <span class="nn">gridspec</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">rc</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">matplotlib.ticker</span> <span class="k">as</span> <span class="nn">ticker</span>
 <span class="kn">import</span> <span class="nn">matplotlib.colors</span> <span class="k">as</span> <span class="nn">mcolors</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">usetex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;errorbar.capsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="n">colors_fig</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">mcolors</span><span class="o">.</span><span class="n">TABLEAU_COLORS</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="n">rc</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">usetex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;text.latex.preamble&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s1">&#39;\usepackage</span><span class="si">{amsmath}</span><span class="s1">&#39;</span><span class="p">]</span>
+<span class="c1">#!apt install texlive-fonts-recommended texlive-fonts-extra cm-super dvipng</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">17</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="s1">&#39;matplotlib&#39;</span><span class="p">,</span> <span class="s1">&#39;inline&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="n">rc</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">usetex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">17</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;text.latex.preamble&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s1">&#39;\usepackage</span><span class="si">{amsmath}</span><span class="s1">&#39;</span><span class="p">]</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="c1">#!apt install texlive-fonts-recommended texlive-fonts-extra cm-super dvipng</span>
+
+<span class="nn">File ~/anaconda3/envs/jupyterbooks/lib/python3.11/site-packages/matplotlib/__init__.py:734,</span> in <span class="ni">RcParams.__setitem__</span><span class="nt">(self, key, val)</span>
+<span class="g g-Whitespace">    </span><span class="mi">732</span>         <span class="n">cval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">[</span><span class="n">key</span><span class="p">](</span><span class="n">val</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">733</span>     <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">ve</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">734</span>         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Key </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">ve</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">735</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_set</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">cval</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">736</span> <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+
+<span class="ne">ValueError</span>: Key text.latex.preamble: Could not convert [&#39;\\usepackage{amsmath}&#39;] to str
 </pre></div>
 </div>
 </div>
@@ -515,7 +542,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2f6a7dc6bc91689d501f7c555f911f760dddfaa4ab33953af4350efdb961aebe.png" src="../_images/2f6a7dc6bc91689d501f7c555f911f760dddfaa4ab33953af4350efdb961aebe.png" />
+<img alt="../_images/d3c9d7bcfc51e4bccbb55915f31ddde0d07008db358aa45898293a0e39aa733e.png" src="../_images/d3c9d7bcfc51e4bccbb55915f31ddde0d07008db358aa45898293a0e39aa733e.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -531,7 +558,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/dbb17d0a488f0c4fb80c039d6a6bab50333b3030e1b1d99aa1f1fdaf5a248a44.png" src="../_images/dbb17d0a488f0c4fb80c039d6a6bab50333b3030e1b1d99aa1f1fdaf5a248a44.png" />
+<img alt="../_images/ab6f485eb5cc84cc60e88eae5bb387fade04e39d3e785d83b3e7dcb8ff9af189.png" src="../_images/ab6f485eb5cc84cc60e88eae5bb387fade04e39d3e785d83b3e7dcb8ff9af189.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -547,7 +574,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/0e705853ddb7dde23d11f8606ff8b9f6c4d6d5271b66fad77435f9ffcd17ec49.png" src="../_images/0e705853ddb7dde23d11f8606ff8b9f6c4d6d5271b66fad77435f9ffcd17ec49.png" />
+<img alt="../_images/a94c1d8e75a8e74d4f5704d40c60e1f26e2b83071a0aaa70441fbfd6b0ab485b.png" src="../_images/a94c1d8e75a8e74d4f5704d40c60e1f26e2b83071a0aaa70441fbfd6b0ab485b.png" />
 </div>
 </div>
 </section>
